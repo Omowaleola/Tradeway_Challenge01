@@ -143,6 +143,23 @@ namespace ChallengeAPI.Migrations
                     b.ToTable("Results");
                 });
 
+            modelBuilder.Entity("ChallengeAPI.Models.User_UserType", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId")
+                        .HasName("PK_User_UserType");
+
+                    b.HasIndex("UserTypeId")
+                        .IsUnique();
+
+                    b.ToTable("UserUserTypes");
+                });
+
             modelBuilder.Entity("ChallengeAPI.Models.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -171,12 +188,7 @@ namespace ChallengeAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserTypeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserTypeId");
 
                     b.ToTable("Users");
                 });
@@ -263,13 +275,21 @@ namespace ChallengeAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ChallengeAPI.Models.Users", b =>
+            modelBuilder.Entity("ChallengeAPI.Models.User_UserType", b =>
                 {
-                    b.HasOne("ChallengeAPI.Models.UserType", "UserType")
-                        .WithMany("Users")
-                        .HasForeignKey("UserTypeId")
+                    b.HasOne("ChallengeAPI.Models.Users", "User")
+                        .WithOne("UserUserType")
+                        .HasForeignKey("ChallengeAPI.Models.User_UserType", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ChallengeAPI.Models.UserType", "UserType")
+                        .WithOne("UserUserType")
+                        .HasForeignKey("ChallengeAPI.Models.User_UserType", "UserTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
 
                     b.Navigation("UserType");
                 });
@@ -301,11 +321,15 @@ namespace ChallengeAPI.Migrations
                     b.Navigation("RedeemedPrizes");
 
                     b.Navigation("Results");
+
+                    b.Navigation("UserUserType")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ChallengeAPI.Models.UserType", b =>
                 {
-                    b.Navigation("Users");
+                    b.Navigation("UserUserType")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

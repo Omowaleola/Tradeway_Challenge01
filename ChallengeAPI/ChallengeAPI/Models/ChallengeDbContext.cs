@@ -15,8 +15,10 @@ namespace ChallengeAPI.Models
         public virtual DbSet<Question> Questions => Set<Question>();
         public virtual DbSet<Result> Results => Set<Result>();
         public virtual DbSet<RedeemedPrize> RedeemedPrizes => Set<RedeemedPrize>();
+        public virtual DbSet<User_UserType> UserUserTypes => Set<User_UserType>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User_UserType>().HasKey(k => k.UserId).HasName("PK_User_UserType");
             modelBuilder.Entity<Result>().HasOne(x => x.Question).WithMany(y => y.Results).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Result>().HasOne(x => x.QuestionOption).WithMany(y => y.Results).OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<RedeemedPrize>().HasOne(x => x.User).WithMany(y => y.RedeemedPrizes).OnDelete(DeleteBehavior.NoAction);
