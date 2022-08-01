@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChallengeAPI", "ChallengeAPI\ChallengeAPI.csproj", "{9E201F8D-D226-4FE4-BE9A-43EDF30FD854}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E201F8D-D226-4FE4-BE9A-43EDF30FD854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E201F8D-D226-4FE4-BE9A-43EDF30FD854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E201F8D-D226-4FE4-BE9A-43EDF30FD854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E201F8D-D226-4FE4-BE9A-43EDF30FD854}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12707066-0538-4C0F-9712-E32E6EBB46A7}
+	EndGlobalSection
+EndGlobal
