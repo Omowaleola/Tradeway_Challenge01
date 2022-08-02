@@ -10,49 +10,38 @@ import {PrizeView} from "../shared/models/views/prizeView.model";
 export class PlayPage implements OnInit {
 
   constructor(private prizeService: PrizeService) { }
-
+  private prizeList: PrizeView[];
   ngOnInit() {
     this.prizeService.getPrizes().subscribe((prizes)=>
     {
-      this.shuffleAndGetPrize(prizes);
-
-
+      this.prizeList=prizes;
     });
   }
-  private shuffleAndGetPrize(prizes: PrizeView[])
+  private shuffleAndGetPrizes(prizes: PrizeView[], numPrizes: number)
   {
-    let cumulative= 0.0;
-    let result='';
-    const elements= this.getPrizeProbability(prizes);
-    let random = Math.random();
-    elements.forEach((prize,key)=>{
-      cumulative+= prize;
-      if(random < cumulative)
-      {
-        result= key;
-      }
-    });
-    console.log("Prize",prizes.find(prize=>prize.name==result));
-    return prizes.find(prize=>prize.name==result);
-  }
-  private getPrizeProbability(prizes: PrizeView[])
-  {
-    let elements= new Map<string,number> ();
-    const total= this.calculateTotalPrizeQuantity(prizes);
+    const tempArray: PrizeView[]=[];
+    const emptyPrize: PrizeView= {
+      name: "No Prize",
+      imageUrl: "",
+      quantityAvailable: this.calculateTotalPrizeQuantity(prizes)*2
+    };
+    tempArray.push(...(Array(emptyPrize.quantityAvailable).fill(emptyPrize)));
     prizes.forEach((prize)=>{
-      const prizeProbability= prize.quantityAvailable/total;
-      elements.set(prize.name,prizeProbability);
-    })
-    console.log('Probability', elements);
-    return elements;
+      let clone:PrizeView[] = Array(prize.quantityAvailable).fill(prize);
+      tempArray.push(...clone);
+    });
+    const finalPrizePool = tempArray.sort((a,b)=>0.5-Math.random());
+    return finalPrizePool.slice(0,numPrizes);
   }
   private  calculateTotalPrizeQuantity(prizes: PrizeView[] )
-{
- let total =0;
-  prizes.forEach((prize)=>{
-    total+=prize.quantityAvailable;
-  });
-  return total;
-}
+  {
+    let total =0;
+    prizes.forEach((prize)=>{
+      total+=prize.quantityAvailable;
+    });
+    return total;
+  }
+
+
 
 }
