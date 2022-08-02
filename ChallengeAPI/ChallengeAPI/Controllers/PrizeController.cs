@@ -15,14 +15,17 @@ namespace ChallengeAPI.Controllers
         }
 
         [HttpGet("availablePrizes")]
-        public ActionResult<List<PrizeView>> GetAvailablPrizes()
+        public ActionResult<List<Prize>> GetAvailablPrizes()
         {
             var prizes = from p in context.Prizes
                          where p.QuantityAvailable > 0
                          select new PrizeView
                          {
+                             Id=p.Id,
                              Name = p.Name,
                              ImageUrl = p.ImageUrl,
+                             QuantityAvailable = p.QuantityAvailable,
+
                          };
             if(prizes!= null)
             {

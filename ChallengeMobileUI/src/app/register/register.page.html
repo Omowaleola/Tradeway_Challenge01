@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Challenge 01- Concept</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+      <ion-card >
+        <ion-card-header>
+          <ion-card-subtitle>Welcome,</ion-card-subtitle>
+          <ion-card-title>Register to Begin</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+              <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col >
+                <ion-item lines="none">
+                  <ion-label position="floating">Name</ion-label>
+                  <ion-input type="text" name="name" ngModel required #nameCtrl="ngModel"></ion-input>
+                </ion-item>
+                      <ion-item *ngIf="!nameCtrl.valid && nameCtrl.touched" lines="none">
+                        <ion-label color="danger"
+                        ><h6>Please fill in your First Name</h6></ion-label
+                        >
+                      </ion-item>
+                <ion-item lines="none">
+                  <ion-label position="floating">Surname</ion-label>
+                  <ion-input type="text" name="surname"  ngModel required #surnameCtrl="ngModel"></ion-input>
+                </ion-item>
+                      <ion-item *ngIf="!surnameCtrl.valid && surnameCtrl.touched" lines="none">
+                        <ion-label color="danger"
+                        ><h6>Please fill in your Surname</h6></ion-label
+                        >
+                      </ion-item>
+                <ion-item lines="none">
+                  <ion-label position="floating">Email</ion-label>
+                  <ion-input type="email"
+                             name="email"
+                             ngModel required
+                             #emailCtrl="ngModel"
+                             appUniqueValidator="email"></ion-input>
+                </ion-item>
+                      <ion-item
+                        *ngIf="(emailCtrl.errors?.required || emailCtrl.errors?.email) && emailCtrl.touched"
+                        lines="none"
+                      >
+                        <ion-label color="danger"
+                        ><h6>Please enter a valid email address</h6></ion-label
+                        >
+                      </ion-item>
+                      <ion-item
+                        *ngIf="emailCtrl.errors?.notUnique && emailCtrl.touched"
+                        lines="none"
+                      >
+                        <ion-label color="danger"
+                        ><h6>{{emailCtrl.errors?.notUnique}}</h6></ion-label
+                        >
+                      </ion-item>
+                <ion-item lines="none">
+                  <ion-label position="floating">Cell Phone</ion-label>
+                  <ion-input type="tel" name="cellPhone"  ngModel required #phoneCtrl="ngModel" maxlength="10"
+                             pattern="[0-9]{10}" appUniqueValidator="mobileNumber"></ion-input>
+                </ion-item>
+                      <ion-item
+                        *ngIf="(phoneCtrl.errors?.required || phoneCtrl.errors?.maxlength || phoneCtrl.errors?.pattern) && phoneCtrl.touched"
+                        lines="none"
+                      >
+                        <ion-label color="danger"
+                        ><h6>Please fill in a correct mobile number</h6></ion-label
+                        >
+                      </ion-item>
+                      <ion-item
+                        *ngIf="phoneCtrl.errors?.notUnique && phoneCtrl.touched"
+                        lines="none"
+                      >
+                        <ion-label color="danger"
+                        ><h6>{{phoneCtrl.errors?.notUnique}}</h6></ion-label
+                        >
+                      </ion-item>
+                      <ion-item>
+
+                        <ion-button
+                          size="small"
+                          color="primary"
+                          slot="end"
+                          type="submit"
+                          [disabled]="!form.valid" >
+                          <ion-icon slot="start" name="play"></ion-icon>
+                          Begin
+                        </ion-button>
+
+                      </ion-item>
+                    </ion-col>
+
+                  </ion-row>
+                </ion-grid>
+              </form>
+
+        </ion-card-content>
+      </ion-card>
+
+</ion-content>
