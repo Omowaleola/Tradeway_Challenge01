@@ -24,7 +24,7 @@ namespace ChallengeAPI.Controllers
                 var temp = context.Results
                .FirstOrDefault(dbResult => dbResult.UserId == result.UserId);
                 if (temp == null)
-                {
+                {   result.Created = DateTime.Now;
                     context.Results.Add(result);
                     context.SaveChanges();
                     return Ok();

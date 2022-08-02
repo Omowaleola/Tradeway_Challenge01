@@ -23,7 +23,7 @@ namespace ChallengeAPI.Controllers
                 var prizeWinnerList = from rp in context.RedeemedPrizes
                                       join r in context.Results on rp.ResultId equals r.Id
                                       join p in context.Prizes on rp.PrizeId equals p.Id
-                                      join u in context.Users on r.UserId equals u.Id
+                                      join u in context.User on r.UserId equals u.Id
                                       select new PrizeWinnerView
                                       {
                                           ResultId = rp.ResultId,
@@ -59,6 +59,7 @@ namespace ChallengeAPI.Controllers
                     if (prize != null && prize.QuantityAvailable>0)
                     {
                         prize.QuantityAvailable = prize.QuantityAvailable - 1;
+                        redeemedPrize.Created = DateTime.Now;
                         context.RedeemedPrizes.Add(redeemedPrize);
                         context.SaveChanges();
                         return Ok();

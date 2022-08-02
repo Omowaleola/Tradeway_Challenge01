@@ -10,5 +10,6 @@
         public Result Result { get; set; } = null!;
         public int PrizeId { get; set; }
         public Prize Prize { get; set; } = null!;
+        public DateTime? Created { get; set; }
     }
 }

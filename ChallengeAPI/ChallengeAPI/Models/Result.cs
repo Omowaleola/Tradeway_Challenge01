@@ -9,7 +9,8 @@
         public Question Question { get; set; } = null!;
         public int QuestionOptionId { get; set; }
         public QuestionOption QuestionOption { get; set; } = null!;
-        public ICollection<RedeemedPrize> RedeemedPrizes { get; set; } = null!;
+        public DateTime? Created { get; set; }
+        public ICollection<RedeemedPrize>? RedeemedPrizes { get; set; } = null!;
 
 
 
