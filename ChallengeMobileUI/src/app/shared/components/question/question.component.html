@@ -1,0 +1,15 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Answer Question Correctly to Win</ion-card-subtitle>
+    <ion-card-title>{{question.text}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <div *ngFor="let option of question.questionOptions">
+        <ion-item (click)="answerQuestion(option)">
+          <ion-label>{{option.text}}</ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

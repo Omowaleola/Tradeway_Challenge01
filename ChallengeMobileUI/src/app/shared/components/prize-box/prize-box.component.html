@@ -1,0 +1,15 @@
+<ion-card class="prizeCard" [color]="prizeId === selectedBox ? 'primary' : ''" >
+  <ion-card-title class="ion-padding" *ngIf="spinState != spinStateEnum.ShowPrize || selectedBox != prizeId">Prize</ion-card-title>
+
+  <ion-card-content class="ion-no-padding" *ngIf="selectedBox === prizeId">
+    <ng-container [ngSwitch]="spinState">
+      <ng-container *ngSwitchCase="spinStateEnum.ShowPrize">
+        <ion-img
+          class="prizeImage"
+          [src]="'assets/img/' + prize?.imageUrl + '.webp'" style="width: 100px;height: 100px;margin: auto; padding: 5px; "
+        ></ion-img>
+        <ion-button *ngIf="prize?.name!='No Prize'" type="submit" (click)="openQuestion(prize)">Answer Question</ion-button>
+      </ng-container>
+    </ng-container>
+  </ion-card-content>
+</ion-card>

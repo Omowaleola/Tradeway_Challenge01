@@ -7,7 +7,7 @@ export interface Result
     questionId: number;
     questionOptionId: number;
     created?: Date;
-    redeemedPrizes: RedeemedPrize;
+    redeemedPrizes?: RedeemedPrize;
 
 
 }

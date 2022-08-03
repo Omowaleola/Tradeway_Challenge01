@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PrizeService} from "../shared/services/prize.service";
 import {PrizeView} from "../shared/models/views/prizeView.model";
+import {SpinState} from "../shared/enums/spin-state.enum";
+import {combineLatest, Subscription} from "rxjs";
+import {SpinService} from "../shared/services/spin.service";
 
 @Component({
   selector: 'app-play',
@@ -8,39 +11,47 @@ import {PrizeView} from "../shared/models/views/prizeView.model";
   styleUrls: ['./play.page.scss'],
 })
 export class PlayPage implements OnInit {
+  numBoxes =4;
+  prizesBehindBoxes: PrizeView[];
+  boxPicked = -1;
+  spinState: SpinState = SpinState.None;
+  spinStateEnum: typeof SpinState = SpinState;
+  prizeList: PrizeView[];
+  private sub: Subscription;
+  constructor(private prizeService: PrizeService, private spinService: SpinService) { }
 
-  constructor(private prizeService: PrizeService) { }
-  private prizeList: PrizeView[];
   ngOnInit() {
-    this.prizeService.getPrizes().subscribe((prizes)=>
+    this.sub= this.prizeService.getPrizes(this.numBoxes).subscribe((sub)=> {
+        this.prizesBehindBoxes = sub;
+      }
+    );
+    this.spinService.selectedPrize.subscribe((value) => {
+      this.boxPicked = value;
+    });
+
+    this.spinService.spinState.subscribe(state => {
+      this.spinState = state;
+    });
+
+  }
+
+  onSpin() {
+    this.onReset();
+    this.spinService.spinWheel();
+  }
+
+  onReset() {
+    this.boxPicked = -1;
+    if(this.sub)
     {
-      this.prizeList=prizes;
-    });
+      this.sub.unsubscribe();
+      this.sub= this.prizeService.getPrizes(this.numBoxes).subscribe((sub)=> this.prizesBehindBoxes=sub);
+
+    }else{
+      this.sub= this.prizeService.getPrizes(this.numBoxes).subscribe((sub)=> this.prizesBehindBoxes=sub);
+    }
   }
-  private shuffleAndGetPrizes(prizes: PrizeView[], numPrizes: number)
-  {
-    const tempArray: PrizeView[]=[];
-    const emptyPrize: PrizeView= {
-      name: "No Prize",
-      imageUrl: "",
-      quantityAvailable: this.calculateTotalPrizeQuantity(prizes)*2
-    };
-    tempArray.push(...(Array(emptyPrize.quantityAvailable).fill(emptyPrize)));
-    prizes.forEach((prize)=>{
-      let clone:PrizeView[] = Array(prize.quantityAvailable).fill(prize);
-      tempArray.push(...clone);
-    });
-    const finalPrizePool = tempArray.sort((a,b)=>0.5-Math.random());
-    return finalPrizePool.slice(0,numPrizes);
-  }
-  private  calculateTotalPrizeQuantity(prizes: PrizeView[] )
-  {
-    let total =0;
-    prizes.forEach((prize)=>{
-      total+=prize.quantityAvailable;
-    });
-    return total;
-  }
+
 
 
 

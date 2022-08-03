@@ -17,7 +17,7 @@ export class RegisterGuard implements CanActivate {
 
     if(localStorage.getItem("user") ==null)
     {
-      this.router.navigate(["register"],{queryParams:{retUrl: route.url}});
+      this.router.navigate(["register"]);
       return false;
     }
     return true;

@@ -4,6 +4,6 @@
   userId: number;
   resultId: number;
   prizeId: number;
-  created: Date;
+  created?: Date;
 
 }

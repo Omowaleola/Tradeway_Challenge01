@@ -5,5 +5,32 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-row>
+    <ion-col offset="4" size="4" class="ion-text-center">
+      <ion-button
+        color="primary"
+        (click)="onSpin()"
+        [disabled]="this.spinState !== spinStateEnum.None"
+        >Spin</ion-button
+      >
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-text-center">
+    <ion-col
+      *ngFor="let prize of prizesBehindBoxes;let i=index"
+      size-xs="6"
+      offset-xs="0"
+      size-sm="4"
+      offset-sm="0"
+      size-md="4"
+      offset-md="0"
+    >
+      <app-prize-box
+        [prize]="prize"
+        [prizeId]="i"
+        [selectedBox]="boxPicked"
+        [spinState]="spinState"
+      ></app-prize-box>
+    </ion-col>
+  </ion-row>
 </ion-content>

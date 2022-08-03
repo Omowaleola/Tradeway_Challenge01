@@ -7,6 +7,12 @@
         public string ImageUrl { get; set; } = null!;
         public int QuantityAvailable { get; set; }
 
-
+       public PrizeView(int? id, string name, string imageUrl, int quantityAvailable)
+        {
+            Id = id;
+            Name = name;
+            ImageUrl = imageUrl;
+            QuantityAvailable = quantityAvailable;
+        }
     }
 }
