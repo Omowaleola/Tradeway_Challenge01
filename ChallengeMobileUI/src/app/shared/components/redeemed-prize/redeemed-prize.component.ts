@@ -7,6 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class RedeemedPrizeComponent implements OnInit {
   @Input() questionCorrect: boolean;
+  @Input() prizeName: string;
+  @Input() prizeUrl: string;
 
   constructor() { }
 

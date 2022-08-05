@@ -9,6 +9,7 @@ import {NativeStorage} from "@ionic-native/native-storage/ngx";
 import {ClaimPrizeService} from "../../services/claim-prize.service";
 import {RedeemedPrize} from "../../models/redeemed_prize.model";
 import {RedeemedPrizeComponent} from "../redeemed-prize/redeemed-prize.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-question',
@@ -22,7 +23,7 @@ export class QuestionComponent implements OnInit {
   constructor(private questionService: QuestionService,
               private modalCtrl: ModalController,
               private localStorage: NativeStorage,
-              private claimPrizeService: ClaimPrizeService) { }
+              private claimPrizeService: ClaimPrizeService, private router: Router) { }
 
   ngOnInit() {
     this.questionService.getQuestion().subscribe((question)=>{
@@ -32,10 +33,11 @@ export class QuestionComponent implements OnInit {
   }
 
     answerQuestion(option: QuestionOption) {
+    console.log(localStorage.getItem('user'));
     let isCorrect=false;
     const result: Result={
       questionId: this.question.id,
-      userId: localStorage.getItem('user')['id'],
+      userId: +(localStorage.getItem('user')),
       questionOptionId: option.id
     };
 
@@ -47,7 +49,7 @@ export class QuestionComponent implements OnInit {
         isCorrect = true;
         const redeemed: RedeemedPrize =
           {
-            userId: localStorage.getItem('user')['id'],
+            userId: +localStorage.getItem('user'),
             prizeId: this.prize.id,
             resultId: savedResult.id
           };
@@ -59,10 +61,17 @@ export class QuestionComponent implements OnInit {
         showBackdrop: true,
         componentProps: {
           questionCorrect: isCorrect,
+          prizeName: this.prize.name,
+          prizeUrl: this.prize.imageUrl
         },
       });
       return rPrizeModel.present();
-    });
+    },
+      (error)=>{
+        this.router.navigate(["register"]);
+        alert(error.error);
+
+      });
 
   }
 }

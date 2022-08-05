@@ -1,5 +1,4 @@
-﻿import {RedeemedPrize} from "../redeemed_prize.model";
-
+﻿
 export interface PrizeView
 {
   id?: number;

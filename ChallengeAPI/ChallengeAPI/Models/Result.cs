@@ -13,6 +13,6 @@
         public ICollection<RedeemedPrize>? RedeemedPrizes { get; set; } = null!;
 
 
-
+        
     }
 }

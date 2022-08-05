@@ -1,0 +1,11 @@
+<div class="dx-card content">
+
+ <dx-pie-chart #pie title="Result from answering Questions"  palette="ocean"
+               [dataSource]="reportValues"
+                 > <dxo-margin [bottom]="20"></dxo-margin>
+   <dxo-legend [visible]="false"></dxo-legend>
+   <dxo-export [enabled]="true"></dxo-export>
+   <dxi-series argumentField="name" valueField="number">
+     <dxo-label [visible]="true" [customizeText]="customizeLabel"> </dxo-label>
+   </dxi-series></dx-pie-chart>
+</div>

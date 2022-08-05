@@ -28,13 +28,7 @@ export class RegisterPage implements OnInit {
       };
     this.userService.registerUser(userToRegister).subscribe(
       (userCreated)=>{
-        localStorage.setItem("user",JSON.stringify({
-          id: userCreated.id,
-          name: userCreated.name,
-          surname: userCreated.surname,
-          email: userCreated.email,
-          cellPhone: userCreated.cellPhone,
-        }));
+        localStorage.setItem("user",userCreated.id.toString());
         this.router.navigate(['play']);
       },
       (error)=>{

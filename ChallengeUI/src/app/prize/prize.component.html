@@ -1,0 +1,24 @@
+
+
+    <div class="dx-card content" style="margin: 15px; padding:5px" >
+      <div class="header">
+        <div class=" title" style="text-align: center"><h6>Prize Page</h6></div>
+      </div>
+      <dx-data-grid id="grid"
+                    [dataSource]="prizeList"
+                    keyExpr="id"
+                    (onSaving)="onSaving($event)">
+        <dxo-editing
+          [allowUpdating]="true"
+          [allowAdding]="true"
+          mode="row"> <!-- 'batch' | 'cell' | 'form' | 'popup' -->
+        </dxo-editing>
+        <dxi-column dataField="name"></dxi-column>
+        <dxi-column dataField="imageUrl" cellTemplate="cellTemplate"></dxi-column>
+        <div *dxTemplate="let cell of 'cellTemplate'">
+          <img src="./assets/img/{{cell.text}}.webp" alt="" style="height: 100px; width:150px;">
+        </div>
+        <dxi-column dataField="quantityAvailable"></dxi-column>
+      </dx-data-grid>
+    </div>
+

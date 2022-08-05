@@ -9,6 +9,7 @@ import { PlayPageRoutingModule } from './play-routing.module';
 import { PlayPage } from './play.page';
 import {PrizeBoxComponent} from "../shared/components/prize-box/prize-box.component";
 import {QuestionComponent} from "../shared/components/question/question.component";
+import {RedeemedPrizeComponent} from "../shared/components/redeemed-prize/redeemed-prize.component";
 
 @NgModule({
     imports: [
@@ -17,7 +18,7 @@ import {QuestionComponent} from "../shared/components/question/question.componen
         IonicModule,
         PlayPageRoutingModule,
     ],
-  declarations: [PlayPage, PrizeBoxComponent, QuestionComponent],
+  declarations: [PlayPage, PrizeBoxComponent, QuestionComponent, RedeemedPrizeComponent],
   exports: [PrizeBoxComponent]
 })
 export class PlayPageModule {}

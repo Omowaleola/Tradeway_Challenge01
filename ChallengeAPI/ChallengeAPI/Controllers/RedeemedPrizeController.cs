@@ -48,19 +48,26 @@ namespace ChallengeAPI.Controllers
             }
         }
         [HttpPost]
-        public IActionResult SaveRedeemedPrize(RedeemedPrize redeemedPrize)
+        public IActionResult SaveRedeemedPrize(RedeemedPrizeView redeemedPrize)
         {
             try
             {
                 var temp = context.RedeemedPrizes.FirstOrDefault(rp => rp.UserId == redeemedPrize.UserId);
                 if (temp == null)
                 {
-                    var prize = context.Prizes.FirstOrDefault(p=>p.Id == redeemedPrize.Id);
+                    var prize = context.Prizes.FirstOrDefault(p=>p.Id == redeemedPrize.PrizeId);
                     if (prize != null && prize.QuantityAvailable>0)
                     {
                         prize.QuantityAvailable = prize.QuantityAvailable - 1;
-                        redeemedPrize.Created = DateTime.Now;
-                        context.RedeemedPrizes.Add(redeemedPrize);
+                        var tempRedeemedPrize = new RedeemedPrize
+                        {
+                            UserId = redeemedPrize.UserId,
+                            ResultId= redeemedPrize.ResultId,
+                            PrizeId= redeemedPrize.PrizeId,
+                            Created= DateTime.Now
+                    };
+                       
+                        context.RedeemedPrizes.Add(tempRedeemedPrize);
                         context.SaveChanges();
                         return Ok();
                     }

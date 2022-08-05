@@ -1,3 +1,46 @@
-<p>
-  redeemed-prize works!
-</p>
+<ion-header>
+  <ion-title>Redeem Your Prize</ion-title>
+</ion-header>
+<ion-content>
+  <ion-card *ngIf="questionCorrect">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Congratulations, You Have Won a
+      </ion-card-subtitle>
+      <ion-card-title>
+        {{prizeName}}
+      </ion-card-title>
+    </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <img src="assets/img/{{prizeUrl}}.webp" alt="">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <a><b>Please take a screenshot as proof of your winnings</b></a>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+
+  </ion-card>
+  <ion-card *ngIf="!questionCorrect">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Awww
+      </ion-card-subtitle>
+      <ion-card-title>
+        You got the question incorrect
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <img src="assets/img/NoPrize.webp" alt="">
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

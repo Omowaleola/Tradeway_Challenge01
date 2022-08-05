@@ -1,6 +1,7 @@
 ﻿using ChallengeAPI.Models;
 using ChallengeAPI.Models.Views;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ChallengeAPI.Controllers
 {
@@ -16,22 +17,16 @@ namespace ChallengeAPI.Controllers
         }
 
         [HttpGet("PrizeQuestion")]
-        public ActionResult<QuestionView> GetQuestionToWinPrize()
+        public ActionResult<Question> GetQuestionToWinPrize()
         {
             try
             {
-                var questions = context.Questions.ToList();
-                questions = questions.OrderBy(x => random.Next()).ToList();
-                if (questions != null)
+               var questions = context.Questions.Include(q=>q.QuestionOptions).ToList();
+                var question = questions.OrderBy(x => random.Next()).First();
+                if (question != null)
                 {
-                    var question = questions.First();
-                    var questionOptions = context.QuestionOptions.Where(qo => qo.QuestionId == question.Id).ToList();
-                    var questionView = new QuestionView
-                    {
-                        question = question,
-                        questionOptions = questionOptions
-                    };
-                    return Ok(questionView);
+                   
+                    return Ok(question);
                 }
                 return BadRequest("No Questions available");
 

@@ -7,6 +7,9 @@
         public string ImageUrl { get; set; } = null!;
         public int QuantityAvailable { get; set; }
 
+        public PrizeView()
+        { }
+
        public PrizeView(int? id, string name, string imageUrl, int quantityAvailable)
         {
             Id = id;

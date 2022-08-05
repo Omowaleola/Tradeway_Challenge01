@@ -71,6 +71,68 @@ namespace ChallengeAPI.Controllers
             var quantities= (from p in context.Prizes select new {p.QuantityAvailable}).ToList();
             return quantities.Select(q=>q.QuantityAvailable).Sum();
         }
+
+
+        [HttpGet()]
+        public ActionResult<List<PrizeView>> GetAllPrizes()
+        {
+            var prizes = from p in context.Prizes                      
+                         select new PrizeView(p.Id, p.Name, p.ImageUrl, p.QuantityAvailable);
+            if(prizes.Any())
+            {
+                return Ok(prizes);
+            }
+            return BadRequest("No Prizes");
+        }
+        [HttpGet("{id}")]
+        public ActionResult<PrizeView> GetPrizeById (int id)
+        {
+            var prize = context.Prizes.FirstOrDefault(prize=>prize.Id == id);
+            if(prize == null)
+            {
+                return NotFound();
+            }
+            return Ok(prize);
+        }
+        [HttpPut("{id}")]
+        public IActionResult UpdatePrize(int prizeId, PrizeView prize)
+        {
+            try
+            {
+                var dbPrize = context.Prizes.FirstOrDefault(prize=>prize.Id == prize.Id);
+                if(dbPrize != null)
+                {
+                    dbPrize.Name=prize.Name;
+                    dbPrize.ImageUrl=prize.ImageUrl;
+                    dbPrize.QuantityAvailable=prize.QuantityAvailable;
+                    context.SaveChanges();
+                    return Ok();
+                }
+                return NotFound();
+
+            }catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult SavePrize(PrizeView prize)
+        {
+            try
+            {
+                var temp = new Prize() { Name = prize.Name, ImageUrl = prize.ImageUrl, QuantityAvailable = prize.QuantityAvailable };
+                context.Prizes.Add(temp);
+                context.SaveChanges();
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
         
     }
 }
